@@ -33,6 +33,7 @@
   },
   "homepage": "https://github.com/rimiti/apikey-manager#readme",
   "dependencies": {
+    "bluebird": "^3.5.0",
     "redis": "^2.8.0",
     "source-map-support": "^0.4.15"
   },
