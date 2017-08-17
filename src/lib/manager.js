@@ -9,15 +9,15 @@ manager.configure({
       secret: "secret",
       options: {
         algorithm: "HS256",
-        expiresIn: "",
-        notBefore: "",
-        audience: "",
-        issuer: "",
-        jwtid: "",
-        subject: "",
-        noTimestamp: "",
-        header: "",
-        keyid: ""
+        expiresIn: null,
+        notBefore: null,
+        audience: null,
+        issuer: null,
+        jwtid: null,
+        subject: null,
+        noTimestamp: null,
+        header: null,
+        keyid: null
       }
     }
   }
