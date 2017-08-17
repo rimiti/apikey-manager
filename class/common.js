@@ -1,14 +1,20 @@
 import bluebird from 'bluebird'
 import Redis from 'redis'
+import mockRedis from 'redis-mock'
 
 export default class Common {
 
   /**
-   * @description Instantiate Redis and promisified it
+   * @description Instatiate Redis and promisified it
    */
   constructor() {
-    bluebird.promisifyAll(Redis.RedisClient.prototype)
-    this.redis = Redis.createClient({host: this.hostname, port: this.port})
+    if (process.env.NODE_ENV === 'test') {
+      bluebird.promisifyAll(mockRedis.RedisClient.prototype)
+      this.redis = mockRedis.createClient({host: this.hostname, port: this.port})
+    } else {
+      bluebird.promisifyAll(Redis.RedisClient.prototype)
+      this.redis = Redis.createClient({host: this.hostname, port: this.port})
+    }
   }
 
   /**
