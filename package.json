@@ -6,7 +6,7 @@
   "main": "dist/lib/manager.js",
   "scripts": {
     "prepare": "gulp",
-    "test": "nyc ava"
+    "test": "NODE_ENV=test nyc ava"
   },
   "repository": {
     "type": "git",
