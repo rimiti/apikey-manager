@@ -10,10 +10,10 @@ export default class Common {
   constructor() {
     if (process.env.NODE_ENV === 'test') {
       bluebird.promisifyAll(mockRedis.RedisClient.prototype)
-      this.redis = mockRedis.createClient({host: this.hostname, port: this.port})
+      this.redis = mockRedis.createClient({host: this.mq.hostname, port: this.mq.port})
     } else {
       bluebird.promisifyAll(Redis.RedisClient.prototype)
-      this.redis = Redis.createClient({host: this.hostname, port: this.port})
+      this.redis = Redis.createClient({host: this.mq.hostname, port: this.mq.port})
     }
   }
 
@@ -50,6 +50,22 @@ export default class Common {
   }
 
   /**
+   * @description Get jwt object
+   * @return {*}
+   */
+  get jwt() {
+    return this._jwt
+  }
+
+  /**
+   * @description Set jwt object
+   * @return {*}
+   */
+  set jwt(value) {
+    this._jwt = value
+  }
+
+  /**
    * @description Hydrate current instance with obj attributes
    * @param obj
    * @param attributes
@@ -65,7 +81,7 @@ export default class Common {
    * @description Return all fields to hydrate
    * @return {[]}
    */
-  itemsToHydrate() {
+  static itemsToHydrate() {
     return ['mq', 'jwt']
   }
 
