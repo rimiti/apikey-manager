@@ -1,4 +1,6 @@
-export default class Resource {
+import Common from './common'
+
+export default class Resource extends Common {
 
   /**
    * @description Add one or multiple resources
