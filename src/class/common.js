@@ -34,6 +34,22 @@ export default class Common {
   }
 
   /**
+   * @description Get mq object
+   * @return {*}
+   */
+  get mq() {
+    return this._mq
+  }
+
+  /**
+   * @description Set mq object
+   * @return {*}
+   */
+  set mq(value) {
+    this._mq = value
+  }
+
+  /**
    * @description Hydrate current instance with obj attributes
    * @param obj
    * @param attributes
@@ -43,6 +59,14 @@ export default class Common {
     for (let item of attributes) {
       this[item] = (obj[item]) ? obj[item] : ''
     }
+  }
+
+  /**
+   * @description Return all fields to hydrate
+   * @return {[]}
+   */
+  itemsToHydrate() {
+    return ['mq', 'jwt']
   }
 
 }
