@@ -7,7 +7,8 @@ export default class Common {
   /**
    * @description Instatiate Redis and promisified it
    */
-  constructor() {
+  constructor(config) {
+    this.hydrate(config, Common.itemsToHydrate())
     if (process.env.NODE_ENV === 'test') {
       bluebird.promisifyAll(mockRedis.RedisClient.prototype)
       this.redis = mockRedis.createClient({host: this.mq.hostname, port: this.mq.port})
