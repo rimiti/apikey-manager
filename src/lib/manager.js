@@ -1,7 +1,7 @@
 import manager from '../class'
 
 manager.configure({
-    redis: {
+    mq: {
       topic: "apikey-manager",
       host: "127.0.0.1",
       port: 6379
