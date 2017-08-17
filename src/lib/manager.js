@@ -6,17 +6,19 @@ manager.configure({
       port: 6379
     },
     jwt: {
-      algorithm: "HS256",
       secret: "secret",
-      expiresIn: "",
-      notBefore: "",
-      audience: "",
-      issuer: "",
-      jwtid: "",
-      subject: "",
-      noTimestamp: "",
-      header: "",
-      keyid: ""
+      options: {
+        algorithm: "HS256",
+        expiresIn: "",
+        notBefore: "",
+        audience: "",
+        issuer: "",
+        jwtid: "",
+        subject: "",
+        noTimestamp: "",
+        header: "",
+        keyid: ""
+      }
     }
   }
 )
