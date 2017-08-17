@@ -6,6 +6,7 @@ manager.configure({
       port: 6379
     },
     jwt: {
+      algorithm: "HS256",
       secret: "secret",
       expiresIn: "",
       notBefore: "",
