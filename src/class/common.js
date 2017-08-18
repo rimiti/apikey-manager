@@ -93,7 +93,7 @@ export default class Common {
    * @return {boolean}
    */
   static isArrayOrString(item, name) {
-    if (!Array.isArray(item) || typeof item !== 'string') throw new Error(`${name} isn't array of string type`)
+    if (!Array.isArray(item) && typeof item !== 'string') throw new Error(`${name} isn't array of string type`)
     return true
   }
 
