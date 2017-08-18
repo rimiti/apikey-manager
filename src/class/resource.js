@@ -2,7 +2,7 @@ import Common from './common'
 
 export default class Resource extends Common {
 
-  constructor(config){
+  constructor(config) {
     super(config)
   }
 
@@ -11,22 +11,42 @@ export default class Resource extends Common {
    * @param {Array|String} resource
    */
   add(resource, key) {
-
   }
 
   /**
    * @description Get one or multiple resources
-   * @param {Array|String} resource
+   * @param resources
+   * @param key
+   * @return {Promise.<TResult>|Promise.<*>}
    */
-  find(resource, key) {
+  find(resources, key) {
+    if (!Array.isArray(resources) && typeof resources !== 'string') throw new Error(`Parameter "resources" isn't array of string type`)
 
+    return this.redis.hgetAsync(this.mq.topic, key)
+      .then(result => {
+        if (typeof resources === 'string') {
+          for (let item of JSON.parse(result)) {
+            if (resources === item) return item
+          }
+        } else {
+          let output = []
+          for (let resourceItem of resources) {
+            for (let mqItem of JSON.parse(result)) {
+              if (resourceItem === mqItem) output.concat(mqItem)
+            }
+          }
+          return output
+        }
+      })
   }
 
   /**
-   * @description Get all resources
+   * @description Find all resources
+   * @param key
+   * @return {*}
    */
   findAll(key) {
-
+    return this.redis.hgetAsync(this.mq.topic, key)
   }
 
   /**
@@ -41,6 +61,10 @@ export default class Resource extends Common {
    * @description Remove all resources
    */
   removeAll(key) {
+
+  }
+
+  _format() {
 
   }
 
