@@ -1,5 +1,4 @@
 import Resource from './resource'
-import Common from './common'
 import jwt from 'jsonwebtoken'
 import {ExceptionKeyFound} from '../exceptions'
 
@@ -11,7 +10,8 @@ export default class Manager extends Resource {
 
   create(resources, key, payload = {}) {
     return new Promise(resolve => {
-      Common.isArrayOrString(resources, 'resource')
+      if (!Array.isArray(resources) && typeof resources !== 'string') throw new Error(`Parameter "resources" isn't array of string type`)
+      if (typeof resources === 'string') resources = [resources]
 
       let options = this.jwt.options
       for (let attribute in options) {
@@ -27,7 +27,6 @@ export default class Manager extends Resource {
           })
           .then(() => Promise.resolve({key: token, resources}))
       })
-      .catch(e => console.log(e))
   }
 
   apikeyExist(key) {
