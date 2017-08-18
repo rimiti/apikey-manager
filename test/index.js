@@ -30,6 +30,14 @@ test('Generate API key with string resource parameter (without API key set)', t 
     })
 })
 
+test('Generate API key with string resource parameter (with API key set)', t => {
+  return manager.create('resource', 'S64Jp6yyfRK2nKZvnTv4wtNRcbt7VPXt5fMBqH7CaMXyPBRN')
+    .then(result => {
+      t.is(result.key, 'S64Jp6yyfRK2nKZvnTv4wtNRcbt7VPXt5fMBqH7CaMXyPBRN')
+      t.is(result.resources[0], 'resource')
+    })
+})
+
 // test('Generate API key with array resource parameter and API key', t => {
 //   manager.create(['resource1', 'resource2'], 'myCustomeApiKey')
 //     .then(result => {
