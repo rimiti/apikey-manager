@@ -23,7 +23,7 @@ export default class Manager extends Resource {
         return this.apikeyExist(token)
           .then(item => {
             if (item) throw new ExceptionKeyFound(`Key ${token} already exist`)
-            return this.redis.hsetAsync(this.mq.topic, token, resources)
+            return this.redis.hsetAsync(this.mq.topic, token, JSON.stringify(resources))
           })
           .then(() => Promise.resolve({key: token, resources}))
       })
