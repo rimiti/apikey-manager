@@ -8,7 +8,7 @@ export default class Manager extends Resource {
     super(config)
   }
 
-  create(resources, key, payload = {}) {
+  create(resources, payload = {}) {
     return new Promise(resolve => {
       if (!Array.isArray(resources) && typeof resources !== 'string') throw new Error(`Parameter "resources" isn't array of string type`)
       if (typeof resources === 'string') resources = [resources]
@@ -17,8 +17,8 @@ export default class Manager extends Resource {
       for (let attribute in options) {
         if (!options[attribute]) delete options[attribute]
       }
-      return resolve(key ? key : jwt.sign(payload, this.jwt.secret, options))
-    })
+      return resolve(typeof payload === 'object' ? jwt.sign(payload, this.jwt.secret, options) : payload)
+        })
       .then(token => {
         return this.apikeyExist(token)
           .then(item => {
