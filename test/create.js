@@ -13,6 +13,16 @@ test('Generate API key with resource array parameter (without API key set)', t =
     })
 })
 
+test('Generate API key with resource array parameter and payload (without API key set)', t => {
+  return manager.create(['resource1', 'resource2'], null, {user_id: 1})
+    .then(result => {
+      const token = jwt.verify(result.key, manager.jwt.secret)
+      t.is(token.user_id, 1)
+      t.is(result.resources[0], 'resource1')
+      t.is(result.resources[1], 'resource2')
+    })
+})
+
 test('Generate API key with resource array parameter (with API key set)', t => {
   return manager.create(['resource1', 'resource2'], 'S64Jp6yyfRK2nKZvnTv4wtNRcbt7VPXt5fMBqH7CaMXyPBRN')
     .then(result => {
@@ -21,6 +31,7 @@ test('Generate API key with resource array parameter (with API key set)', t => {
       t.is(result.resources[1], 'resource2')
     })
 })
+
 
 test('Generate API key with string resource parameter (without API key set)', t => {
   return manager.create('resource')
