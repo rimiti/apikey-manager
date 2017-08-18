@@ -9,9 +9,18 @@ export default class Resource extends Common {
 
   /**
    * @description Add one or multiple resources
-   * @param {Array|String} resource
+   * @param {Array|String} resources
    */
-  add(resource, key) {
+  add(resources, key) {
+    if (!Array.isArray(resources) && typeof resources !== 'string') throw new Error(`Parameter "resources" isn't array of string type`)
+    return this.find(resources, key)
+      .then((results) => {
+        if (Array.isArray(resources) && (resources.length !== results.length)) {
+          // TODO: Check which resource already exist to throw an error
+        }
+        return Promise.resolve()
+      })
+
   }
 
   /**
@@ -32,7 +41,7 @@ export default class Resource extends Common {
           let output = []
           for (let resourceItem of resources) {
             for (let mqItem of JSON.parse(result)) {
-              if (resourceItem === mqItem) output.concat(mqItem)
+              if (resourceItem === mqItem) output.push(mqItem)
             }
           }
           return Promise.resolve(output)
@@ -51,7 +60,9 @@ export default class Resource extends Common {
 
   /**
    * @description Remove one or multiple resources
-   * @param {Array|String} resources
+   * @param resources
+   * @param key
+   * @return {Promise.<TResult>}
    */
   remove(resources, key) {
     if (!Array.isArray(resources) && typeof resources !== 'string') throw new Error(`Parameter "resources" isn't array of string type`)
