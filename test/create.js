@@ -40,7 +40,7 @@ test('Generate API key with string resource parameter', t => {
     })
 })
 
-test('Generate API key with string resource parameter (with API key set)', t => {
+test('Generate API key with string resource parameter and API key', t => {
   return manager.create('resource', 'S64Jp6yyfRK2nKZvnTv4wtNRcbt7VPXt5fMBqH7CaMXyPBRN')
     .then(result => {
       t.is(result.key, 'S64Jp6yyfRK2nKZvnTv4wtNRcbt7VPXt5fMBqH7CaMXyPBRN')
@@ -48,9 +48,8 @@ test('Generate API key with string resource parameter (with API key set)', t => 
     })
 })
 
-
-
-
-
-
-
+test('Generate two same API keys', async t => {
+  const promise = manager.create('resource1', 'S64Jp6yyfRK2nKZvnTv4wtNRcbt7VPXt5fMBqH7CaMXyPBRN')
+    .then(() => manager.create('resource2', 'S64Jp6yyfRK2nKZvnTv4wtNRcbt7VPXt5fMBqH7CaMXyPBRN'))
+  await t.throws(promise)
+})
