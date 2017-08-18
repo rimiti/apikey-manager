@@ -1,4 +1,5 @@
 import Common from './common'
+import {ExceptionResourceNotFound} from '../exceptions'
 
 export default class Resource extends Common {
 
@@ -21,7 +22,6 @@ export default class Resource extends Common {
    */
   find(resources, key) {
     if (!Array.isArray(resources) && typeof resources !== 'string') throw new Error(`Parameter "resources" isn't array of string type`)
-
     return this.redis.hgetAsync(this.mq.topic, key)
       .then(result => {
         if (typeof resources === 'string') {
@@ -51,10 +51,28 @@ export default class Resource extends Common {
 
   /**
    * @description Remove one or multiple resources
-   * @param {Array|String} resource
+   * @param {Array|String} resources
    */
-  remove(resource, key) {
+  remove(resources, key) {
+    if (!Array.isArray(resources) && typeof resources !== 'string') throw new Error(`Parameter "resources" isn't array of string type`)
+    return this.find(resources, key)
+      .then(result => {
+        if (!result) throw new ExceptionResourceNotFound(`Resource ${JSON.stringify(resources)} not found`)
 
+        if (typeof resources === 'string') {
+          for (let item of JSON.parse(result)) {
+            if (resources === item) return Promise.resolve(item)
+          }
+        } else {
+          let output = []
+          for (let resourceItem of resources) {
+            for (let mqItem of JSON.parse(result)) {
+              if (resourceItem === mqItem) output.concat(mqItem)
+            }
+          }
+          return Promise.resolve(output)
+        }
+      })
   }
 
   /**
