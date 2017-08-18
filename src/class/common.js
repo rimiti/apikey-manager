@@ -86,15 +86,4 @@ export default class Common {
     return ['mq', 'jwt']
   }
 
-  /**
-   * @description Check item is array or string type
-   * @param item
-   * @param name
-   * @return {boolean}
-   */
-  static isArrayOrString(item, name) {
-    if (!Array.isArray(item) && typeof item !== 'string') throw new Error(`${name} isn't array of string type`)
-    return true
-  }
-
 }
