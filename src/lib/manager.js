@@ -3,7 +3,7 @@ import manager from '../class'
 manager.configure({
     mq: {
       topic: "apikey-manager",
-      host: "127.0.0.1",
+      hostname: "127.0.0.1",
       port: 6379
     },
     jwt: {
