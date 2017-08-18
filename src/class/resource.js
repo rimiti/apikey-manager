@@ -26,7 +26,7 @@ export default class Resource extends Common {
       .then(result => {
         if (typeof resources === 'string') {
           for (let item of JSON.parse(result)) {
-            if (resources === item) return item
+            if (resources === item) return Promise.resolve(item)
           }
         } else {
           let output = []
@@ -35,7 +35,7 @@ export default class Resource extends Common {
               if (resourceItem === mqItem) output.concat(mqItem)
             }
           }
-          return output
+          return Promise.resolve(output)
         }
       })
   }
@@ -59,9 +59,11 @@ export default class Resource extends Common {
 
   /**
    * @description Remove all resources
+   * @param key
+   * @return {*}
    */
   removeAll(key) {
-
+    return this.redis.hdelAsync(this.mq.topic, key)
   }
 
   _format() {
