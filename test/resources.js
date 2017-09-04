@@ -11,7 +11,12 @@ test.before(async t => {
 test('Add resources from array parameter', t => {
   return manager.add(['resource1', 'resource2'], access.key)
     .then(result => {
-      console.log(result)
+      t.is(result, 0)
+      return manager.findAll(access.key)
+    })
+    .then(results => {
+      t.is(results[0], 'resource1')
+      t.is(results[1], 'resource2')
     })
 })
 
