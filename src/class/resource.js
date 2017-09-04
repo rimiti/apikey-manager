@@ -12,7 +12,7 @@ export class Resource extends Common {
    * @param {Array|String} resources
    */
   add(resources, key) {
-    if (!Array.isArray(resources) && typeof resources !== 'string') throw new Error(`Parameter "resources" isn't array of string type`)
+    if (!Array.isArray(resources) && typeof resources !== 'string') throw new Error(`Parameter "resources" isn't array or string type`)
     return this.find(resources, key)
       .then((results) => {
         if (Array.isArray(resources) && (resources.length !== results.length)) {
@@ -30,7 +30,7 @@ export class Resource extends Common {
    * @return {Promise.<TResult>|Promise.<*>}
    */
   find(resources, key) {
-    if (!Array.isArray(resources) && typeof resources !== 'string') throw new Error(`Parameter "resources" isn't array of string type`)
+    if (!Array.isArray(resources) && typeof resources !== 'string') throw new Error(`Parameter "resources" isn't array or string type`)
     return this.redis.hgetAsync(this.mq.topic, key)
       .then(result => {
         if (typeof resources === 'string') {
@@ -65,7 +65,7 @@ export class Resource extends Common {
    * @return {Promise.<TResult>}
    */
   remove(resources, key) {
-    if (!Array.isArray(resources) && typeof resources !== 'string') throw new Error(`Parameter "resources" isn't array of string type`)
+    if (!Array.isArray(resources) && typeof resources !== 'string') throw new Error(`Parameter "resources" isn't array or string type`)
     return this.find(resources, key)
       .then(result => {
         if (!result) throw new ExceptionResourceNotFound(`Resource ${JSON.stringify(resources)} not found`)
