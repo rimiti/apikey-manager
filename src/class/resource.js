@@ -55,10 +55,11 @@ export class Resource extends Common {
   /**
    * @description Find all resources
    * @param key
-   * @return {*}
+   * @return {Promise.<TResult>|Promise.<*>}
    */
   findAll(key) {
     return this.redis.hgetAsync(this.mq.topic, key)
+      .then(json => JSON.parse(json))
   }
 
   /**
