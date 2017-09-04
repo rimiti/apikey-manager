@@ -1,10 +1,10 @@
-import Exception from '../base'
+import {Exception} from '../base'
 
-export default class ExceptionResourceFound extends Exception {
+export class ExceptionResourceFound extends Exception {
 
   constructor(message) {
     super()
-    this.name = 'ExceptionResourceFound'
+    this.name = this.constructor.name
     this.message = message ? message : `Resource already exist`
   }
 }

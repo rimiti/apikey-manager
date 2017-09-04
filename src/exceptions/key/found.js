@@ -1,10 +1,10 @@
-import Exception from '../base'
+import {Exception} from '../base'
 
-export default class ExceptionKeyFound extends Exception {
+export class ExceptionKeyFound extends Exception {
 
   constructor(message) {
     super()
-    this.name = 'ExceptionKeyFound'
+    this.name = this.constructor.name
     this.message = message ? message : `Key already exist`
   }
 }

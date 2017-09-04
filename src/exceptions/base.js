@@ -1,4 +1,4 @@
-export default class Exception {
+export class Exception {
 
   get name() {
     return this._name
