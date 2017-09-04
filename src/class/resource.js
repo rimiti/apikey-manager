@@ -14,13 +14,16 @@ export class Resource extends Common {
   add(resources, key) {
     if (!Array.isArray(resources) && typeof resources !== 'string') throw new Error(`Parameter "resources" isn't array or string type`)
     return this.find(resources, key)
-      .then((results) => {
+      .then(results => {
         if (Array.isArray(resources) && (resources.length !== results.length)) {
-          // TODO: Check which resource already exist to throw an error
+          if (typeof resources === 'string') {
+            // TODO: Check if this resource already exists and throw an error (in safe mode only)
+            return this.redis.hsetAsync(this.mq.topic, key, JSON.stringify(resources))
+          }
+          // TODO: Check for each resources if they already exists and throw an error (in safe mode only)
+          return this.redis.hsetAsync(this.mq.topic, key, JSON.stringify(resources))
         }
-        return Promise.resolve()
       })
-
   }
 
   /**
