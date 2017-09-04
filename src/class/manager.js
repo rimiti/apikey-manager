@@ -1,8 +1,8 @@
-import Resource from './resource'
+import {Resource} from './resource'
 import jwt from 'jsonwebtoken'
 import {ExceptionKeyFound} from '../exceptions'
 
-export default class Manager extends Resource {
+export class Manager extends Resource {
 
   constructor(config) {
     super(config)

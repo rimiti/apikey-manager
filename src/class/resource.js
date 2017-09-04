@@ -1,7 +1,7 @@
-import Common from './common'
+import {Common} from './common'
 import {ExceptionResourceNotFound} from '../exceptions'
 
-export default class Resource extends Common {
+export class Resource extends Common {
 
   constructor(config) {
     super(config)

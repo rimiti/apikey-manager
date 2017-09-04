@@ -2,7 +2,7 @@ import bluebird from 'bluebird'
 import Redis from 'redis'
 import mockRedis from 'redis-mock'
 
-export default class Common {
+export class Common {
 
   /**
    * @description Instatiate Redis and promisified it

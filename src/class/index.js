@@ -1,4 +1,4 @@
-import Manager from './manager'
+import {Manager} from './manager'
 import jsonOverride from 'json-override'
 
 let configuration
