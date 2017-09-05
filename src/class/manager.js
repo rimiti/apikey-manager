@@ -8,6 +8,12 @@ export class Manager extends Resource {
     super(config)
   }
 
+  /**
+   * @description Create key associated to resource
+   * @param resources
+   * @param key
+   * @return {Promise.<TResult>}
+   */
   create(resources, key = {}) {
     return this.generateKey(key)
       .then(token => {
