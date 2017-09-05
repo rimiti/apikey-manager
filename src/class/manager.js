@@ -18,7 +18,7 @@ export class Manager extends Resource {
         if (!options[attribute]) delete options[attribute]
       }
       return resolve(typeof payload === 'object' ? jwt.sign(payload, this.jwt.secret, options) : payload)
-        })
+    })
       .then(token => {
         return this.apikeyExist(token)
           .then(item => {
@@ -34,5 +34,13 @@ export class Manager extends Resource {
       .then(item => !!item)
   }
 
+  /**
+   * @description Generate key
+   * @param key
+   * @return {Promise}
+   */
+  generateKey(key = {}) {
+    return new Promise(resolve => resolve(typeof key === 'object' ? jwt.sign(key, this.jwt.secret, this.jwt.options) : key))
+  }
 
 }
