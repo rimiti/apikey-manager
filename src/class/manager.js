@@ -10,8 +10,8 @@ export class Manager extends Resource {
 
   create(resources, payload = {}) {
     return new Promise(resolve => {
-      if (!Array.isArray(resources) && typeof resources !== 'string') throw new Error(`Parameter "resources" isn't array of string type`)
-      if (typeof resources === 'string') resources = [resources]
+      // if (!Array.isArray(resources) && typeof resources !== 'string') throw new Error(`Parameter "resources" isn't array of string type`)
+      // if (typeof resources === 'string') resources = [resources]
 
       let options = this.jwt.options
       for (let attribute in options) {
@@ -29,18 +29,22 @@ export class Manager extends Resource {
       })
   }
 
-  apikeyExist(key) {
-    return this.redis.hgetAsync(this.mq.topic, key)
-      .then(item => !!item)
-  }
-
   /**
    * @description Generate key
    * @param key
    * @return {Promise}
    */
   generateKey(key = {}) {
-    return new Promise(resolve => resolve(typeof key === 'object' ? jwt.sign(key, this.jwt.secret, this.jwt.options) : key))
+    return new Promise(resolve => {
+      if (typeof key === 'object') {
+        let options = this.jwt.options
+        for (let attribute in options) {
+          if (!options[attribute]) delete options[attribute]
+        }
+        return resolve(jwt.sign(key, this.jwt.secret, options))
+      }
+      return resolve(key)
+    })
   }
 
 }
