@@ -8,19 +8,10 @@ export class Manager extends Resource {
     super(config)
   }
 
-  create(resources, payload = {}) {
-    return new Promise(resolve => {
-      // if (!Array.isArray(resources) && typeof resources !== 'string') throw new Error(`Parameter "resources" isn't array of string type`)
-      // if (typeof resources === 'string') resources = [resources]
-
-      let options = this.jwt.options
-      for (let attribute in options) {
-        if (!options[attribute]) delete options[attribute]
-      }
-      return resolve(typeof payload === 'object' ? jwt.sign(payload, this.jwt.secret, options) : payload)
-    })
+  create(resources, key = {}) {
+    return this.generateKey(key)
       .then(token => {
-        return this.apikeyExist(token)
+        return this.findAll(token)
           .then(item => {
             if (item) throw new ExceptionKeyFound(`Key ${token} already exist`)
             return this.redis.hsetAsync(this.mq.topic, token, JSON.stringify(resources))
@@ -34,7 +25,7 @@ export class Manager extends Resource {
    * @param key
    * @return {Promise}
    */
-  generateKey(key = {}) {
+  generateKey(key) {
     return new Promise(resolve => {
       if (typeof key === 'object') {
         let options = this.jwt.options
